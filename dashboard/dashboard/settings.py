@@ -1,7 +1,16 @@
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Initialize environ  
+env = environ.Env()
+environ.Env.read_env()
+
+# DEBUG & SECRET KEY 
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
 # Application definition
 
@@ -12,6 +21,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # installed apps 
+    'main',
 ]
 
 MIDDLEWARE = [
