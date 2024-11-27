@@ -4,7 +4,7 @@
 {% block content %}
 <div class="d-flex justify-content-between mb-3">
     <h5 class="fw-bold">Image Store</h5>
-    <a href="" class="btn btn-dark btn-sm p-2 rounded">+ Image</a>
+    <a href="{% url 'image_create' %}" class="btn btn-dark btn-sm p-2 rounded">+ Image</a>
 </div>
 <div class="row g-4">
     {% for image in data %}
