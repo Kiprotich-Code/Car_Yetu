@@ -1,0 +1,27 @@
+{% extends '../index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <h5 class="fw-bold">Image Store</h5>
+    <a href="" class="btn btn-dark btn-sm p-2 rounded">+ Image</a>
+</div>
+<div class="row g-4">
+    {% for image in data %}
+    <!-- Gallery Item -->
+    <div class="col-12 col-md-4 col-lg-4">
+        <div class="card position-relative">
+            <!-- Image -->
+            <img src="{{image.image}}" class="card-img-top" alt="Gallery Image 1" style="max-height: 300px;">
+
+            <!-- Name and Date Tag -->
+            <div class="position-absolute bottom-0 start-0 text-white p-2 rounded-end"
+                style="background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));">
+                <small>{{image.title}}</small><br>
+                <small><span class="formatted-date" data-datetime="{{ image.uploaded_at }}"></span></small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

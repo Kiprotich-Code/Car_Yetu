@@ -54,3 +54,20 @@ toggler.addEventListener('change', function () {
         document.body.classList.remove('dark');
     }
 });
+
+// DateTime Image List 
+document.addEventListener("DOMContentLoaded", function () {
+    // Select all elements with the class 'formatted-date'
+    document.querySelectorAll('.formatted-date').forEach(function (element) {
+        const dateTime = element.getAttribute('data-datetime'); // Get the raw date-time string
+        if (dateTime) {
+            // Convert to a human-readable format
+            const formattedDate = new Date(dateTime).toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+            element.textContent = formattedDate;
+        }
+    });
+});
