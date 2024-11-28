@@ -1,0 +1,33 @@
+{% extends './register_customer.html' %}
+
+{% block content %}
+<div class="align-self-center">
+    <div class="content text-dark text-center p-3">
+        <p class="small"> Fast. Transparent. Honest. </p>
+        <h2 class="text-primary">Welcome, back!</h2>
+        <h5 class="text-dark py-2">Please, sign in with your details to continue....</h5>
+    </div>
+    <div class="py-2">
+        {% if messages %}
+            <div class="text-center">
+                {% for message in messages %}
+                    {% if message.error %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-dark w-100 mb-3">Sign In</button>
+        </p>
+    </form>
+</div>
+{% endblock %}
