@@ -5,27 +5,6 @@ from .forms import LoginForm, CustomerRegisterForm
 from django.contrib import messages
 
 # Create your views here.
-def register_customer(request):
-    if request.method == 'POST':
-        form = CustomerRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.user_type = 'customer'
-            user.save()
-            messages.success(request, ('Successfully registered!'))
-            return redirect('login')
-
-        else:
-            messages.error(request, 'Enter Valid Details and Try Again!')
-        
-    else:
-        form = CustomerRegisterForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'register_customer.html', context)
-
 def signin(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -35,19 +14,11 @@ def signin(request):
 
         if user is not None:
             login(request, user)
-            
-            # redirect users based on role            
-            if user.is_staff:
-                messages.success(request, 'Login successful!')
-                return redirect('dashboard')
-            
-            else:
-                messages.success(request, 'Login successful!')
-                return redirect('user_dashboard')
+            return redirect('index')               
         
         else:
-            messages.error(request, 'User Does Not Exist!')
-            return redirect('login')
+            messages.error(request, 'Wrong details! Chill out, and try again!')
+            return redirect('index')
 
     else:
         form = LoginForm()
@@ -60,4 +31,4 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    return redirect('home')
+    return redirect('login')

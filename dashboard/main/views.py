@@ -2,8 +2,10 @@ import requests
 from django.shortcuts import render, redirect
 from .forms import ImageUploadForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required()
 def index(request):
     return render(request, 'index.html', {})
 
@@ -51,7 +53,8 @@ def images_list(request):
             {'error': 'Failed to fetch images from the API.'},
         )
 
-
+# CREATE IMAGE 
+@login_required()
 def image_create(request):
     if request.method == 'POST' and request.FILES['image']:
         form = ImageUploadForm(request.POST, request.FILES)
@@ -77,7 +80,8 @@ def image_create(request):
 
     return render(request, 'images/image_create.html', {'form': form})
 
-# UPDATE
+# UPDATE IMAGE
+@login_required()
 def image_update(request, image_id):
     api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
     if request.method == 'POST':
@@ -115,7 +119,8 @@ def image_update(request, image_id):
     return render(request, 'images/image_update.html', {'form': form})
 
 
-# DELETE 
+# DELETE IMAGE
+@login_required()
 def image_delete(request, image_id):
     api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
     if request.method == 'POST':
