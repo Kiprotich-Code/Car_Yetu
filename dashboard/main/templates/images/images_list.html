@@ -7,12 +7,12 @@
     <a href="{% url 'image_create' %}" class="btn btn-dark btn-sm p-2 rounded">+ Image</a>
 </div>
 <div class="row g-4">
-    {% for image in data %}
+    {% for image in results %}
     <!-- Gallery Item -->
     <div class="col-12 col-md-4 col-lg-4">
         <div class="card position-relative">
             <!-- Image -->
-            <img src="{{image.image}}" class="card-img-top" alt="Gallery Image 1" style="max-height: 300px;">
+            <img src="{{image.image}}" class="card-img-top" alt="Gallery Image 1" style="height: 200px;">
 
             <!-- Name and Date Tag -->
             <div class="position-absolute bottom-0 start-0 text-white p-2 rounded-end"
@@ -23,5 +23,19 @@
         </div>
     </div>
     {% endfor %}
+
+    <div class="pagination p-3 mb-3">
+        {% if has_previous %}
+            <!-- <a href="?page=1">First</a> -->
+            <a href="?page={{ previous_page }}" class="mx-2"> << Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_number }} of {{ total_pages }}</span>
+
+        {% if has_next %}
+            <a href="?page={{ next_page }}" class="mx-2">Next >></a>
+            <!-- <a href="?page={{ total_pages }}">Last</a> -->
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
