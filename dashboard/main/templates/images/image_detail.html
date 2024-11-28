@@ -1,0 +1,24 @@
+{% extends '../index.html' %}
+
+{% block content %}
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% else %}
+<div class="d-flex justify-content-between p-3">
+    <div>
+        <h5>{{ image.title }}</h5>
+    </div>
+    <div class="">
+        <a href="{% url 'images_list' %}" class="btn btn-sm rounded btn-primary mx-3">Back to Image List</a>
+        <a href="{% url 'image_create' %}" class="btn btn-sm rounded btn-success mx-3">Add Another Image</a>
+        <a href="{% url 'image_update' image.id %}" class="btn btn-sm rounded btn-warning">Edit</a>
+        <a href="{% url 'image_delete' image.id %}" class="btn btn-sm rounded btn-danger mx-3">Delete</a>
+    </div>
+</div>
+<div>
+    <img src="{{ image.image }}" alt="{{ image.title }}" style="max-height: 400px; width: 100%;">
+</div>
+{% endif %}
+
+{% endblock %}

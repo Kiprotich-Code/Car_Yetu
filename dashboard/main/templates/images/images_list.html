@@ -10,32 +10,35 @@
     {% for image in results %}
     <!-- Gallery Item -->
     <div class="col-12 col-md-4 col-lg-4">
-        <div class="card position-relative">
-            <!-- Image -->
-            <img src="{{image.image}}" class="card-img-top" alt="Gallery Image 1" style="height: 200px;">
+        <a href="{% url 'image_detail' image.id %}">
+            <div class="card position-relative">
+                <!-- Image -->
+                <img src="{{image.image}}" class="card-img-top" alt="Gallery Image 1" style="height: 200px;">
 
-            <!-- Name and Date Tag -->
-            <div class="position-absolute bottom-0 start-0 text-white p-2 rounded-end"
-                style="background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));">
-                <small>{{image.title}}</small><br>
-                <small><span class="formatted-date" data-datetime="{{ image.uploaded_at }}"></span></small>
+                <!-- Name and Date Tag -->
+                <div class="position-absolute bottom-0 start-0 text-white p-2 rounded-end"
+                    style="background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));">
+                    <small>{{image.title}}</small><br>
+                    <small><span class="formatted-date" data-datetime="{{ image.uploaded_at }}"></span></small>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
     {% endfor %}
 
     <div class="pagination p-3 mb-3">
         {% if has_previous %}
-            <!-- <a href="?page=1">First</a> -->
-            <a href="?page={{ previous_page }}" class="mx-2"> << Previous</a>
-        {% endif %}
+        <!-- <a href="?page=1">First</a> -->
+        <a href="?page={{ previous_page }}" class="mx-2">
+            << Previous</a>
+                {% endif %}
 
-        <span>Page {{ page_number }} of {{ total_pages }}</span>
+                <span>Page {{ page_number }} of {{ total_pages }}</span>
 
-        {% if has_next %}
-            <a href="?page={{ next_page }}" class="mx-2">Next >></a>
-            <!-- <a href="?page={{ total_pages }}">Last</a> -->
-        {% endif %}
+                {% if has_next %}
+                <a href="?page={{ next_page }}" class="mx-2">Next >></a>
+                <!-- <a href="?page={{ total_pages }}">Last</a> -->
+                {% endif %}
     </div>
 </div>
 {% endblock %}

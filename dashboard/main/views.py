@@ -53,6 +53,23 @@ def images_list(request):
             {'error': 'Failed to fetch images from the API.'},
         )
 
+# DETAIL VIEW IMAGE 
+def image_detail(request, image_id):
+    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        image_data = response.json()
+        return render(request, 'images/image_detail.html', {'image': image_data})
+    else:
+        # Handle error if the API fails
+        return render(
+            request,
+            'images/image_detail.html',
+            {'error': 'Unable to fetch image details.'},
+        )
+
+
 # CREATE IMAGE 
 @login_required()
 def image_create(request):

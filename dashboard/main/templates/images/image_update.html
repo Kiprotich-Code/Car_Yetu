@@ -1,0 +1,16 @@
+{% extends '../index.html' %}
+
+{% block content %}
+<h1>Update Image</h1>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+<a href="{% url 'images_list' %}">Back to Image List</a>
+{% endblock %}
