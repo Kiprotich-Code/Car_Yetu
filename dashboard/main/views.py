@@ -76,3 +76,59 @@ def image_create(request):
         form = ImageUploadForm()
 
     return render(request, 'images/image_create.html', {'form': form})
+
+# UPDATE
+def image_update(request, image_id):
+    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            image = request.FILES.get('image')  # Handle image only if updated
+
+            # Prepare the data for the API
+            data = {'title': title}
+            files = {'image': image} if image else None
+
+            response = requests.put(api_url, data=data, files=files)
+
+            if response.status_code == 200:
+                return redirect('images_list')  # Redirect to list view after successful update
+            else:
+                return render(
+                    request,
+                    'images/image_update.html',
+                    {
+                        'form': form,
+                        'error': 'Failed to update the image.',
+                    },
+                )
+    else:
+        # Fetch current data to populate the form
+        response = requests.get(api_url)
+        if response.status_code == 200:
+            current_data = response.json()
+            form = ImageUploadForm(initial={'title': current_data.get('title')})
+        else:
+            return redirect('images_list')  # Redirect if unable to fetch data
+
+    return render(request, 'images/image_update.html', {'form': form})
+
+
+# DELETE 
+def image_delete(request, image_id):
+    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    if request.method == 'POST':
+        response = requests.delete(api_url)
+
+        if response.status_code == 204:  # Successful deletion
+            return redirect('images_list')
+        else:
+            return render(
+                request,
+                'images/image_delete.html',
+                {'error': 'Failed to delete the image.'},
+            )
+
+    # Render confirmation page
+    return render(request, 'images/image_delete.html', {'image_id': image_id})
