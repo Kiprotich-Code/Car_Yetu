@@ -24,21 +24,31 @@ def images_list(request):
     if response.status_code == 200:
         data = response.json()
 
-        # Extract required data
-        results = data.get('results', [])
-        count = data.get('count', 0)
-        next_url = data.get('next')
-        previous_url = data.get('previous')
+        if isinstance(data, list):  # If data is a list, handle accordingly
+            results = data  # Assign the list directly
+            count = len(results)
+            next_url = None
+            previous_url = None
+        elif isinstance(data, dict):  # Expected dictionary response
+            results = data.get('results', [])
+            count = data.get('count', 0)
+            next_url = data.get('next')
+            previous_url = data.get('previous')
+        else:
+            results = []
+            count = 0
+            next_url = None
+            previous_url = None
 
         # Calculate total pages
         total_pages = (count + per_page - 1) // per_page  # Ceiling division
 
         # Prepare context for the template
         context = {
-            'results': results,  # Items for the current page
-            'count': count,  # Total number of items
-            'page_number': page_number,  # Current page number
-            'total_pages': total_pages,  # Total number of pages
+            'results': results,
+            'count': count,
+            'page_number': page_number,
+            'total_pages': total_pages,
             'has_next': next_url is not None,
             'has_previous': previous_url is not None,
             'next_page': page_number + 1 if next_url else None,
@@ -46,6 +56,7 @@ def images_list(request):
         }
 
         return render(request, 'images/images_list.html', context)
+
     else:
         return render(
             request,
