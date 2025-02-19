@@ -18,7 +18,7 @@ def images_list(request):
     offset = (page_number - 1) * per_page
 
     # Fetch data from the API with limit and offset
-    api_url = f'http://localhost:8000/api/slider_images/?limit={per_page}&offset={offset}'
+    api_url = f'https://test.api.bellyone.co.ke/api/slider_images/?limit={per_page}&offset={offset}'
     response = requests.get(api_url)
 
     if response.status_code == 200:
@@ -55,7 +55,7 @@ def images_list(request):
 
 # DETAIL VIEW IMAGE 
 def image_detail(request, image_id):
-    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    api_url = f'https://test.api.bellyone.co.ke/api/slider_images/{image_id}/'
     response = requests.get(api_url)
 
     if response.status_code == 200:
@@ -80,7 +80,7 @@ def image_create(request):
             title = form.cleaned_data['title']
 
             # Save the image to the local file system
-            api_url = 'http://localhost:8000/api/slider_images/'
+            api_url = 'https://test.api.bellyone.co.ke/api/slider_images/'
             files = {'image': image}  # Send the file directly
             data = {'title': title}  # Other fields
             response = requests.post(api_url, files=files, data=data)
@@ -100,7 +100,7 @@ def image_create(request):
 # UPDATE IMAGE
 @login_required()
 def image_update(request, image_id):
-    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    api_url = f'https://test.api.bellyone.co.ke/api/slider_images/{image_id}/'
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -139,7 +139,7 @@ def image_update(request, image_id):
 # DELETE IMAGE
 @login_required()
 def image_delete(request, image_id):
-    api_url = f'http://localhost:8000/api/slider_images/{image_id}/'
+    api_url = f'https://test.api.bellyone.co.ke/api/slider_images/{image_id}/'
     if request.method == 'POST':
         response = requests.delete(api_url)
 
