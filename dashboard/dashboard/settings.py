@@ -1,8 +1,12 @@
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env()
 
 # DEBUG & SECRET KEY 
 SECRET_KEY='django-insecure-w@ypyo)ffw1&wubw1i+@4fh-7mgk!gg6_1v-r^xy4h#c7n^)kk'
@@ -60,8 +64,12 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DATABASE_NAME'),  # Database name
+        'USER': env('DATABASE_USER'),  # Username
+        'PASSWORD': env('DATABASE_PASSWORD'),  # Password
+        'HOST': env('DATABASE_HOST'),  # Host (hostname of the server)
+        'PORT': '40498',  # Port
     }
 }
 
